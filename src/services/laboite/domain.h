@@ -6,7 +6,6 @@
 #include "components/webserver/webserverinterface.h"
 #include "components/ota/otaInterface.h"
 #include "components/time/timeInterface.h"
-#include "components/clientapi/clientapiInterface.h"
 
 #define SSIDSTORAGE 10
 #define PASSSTORAGE 60
@@ -24,7 +23,6 @@ class Domain {
     BoardInterface *board;
     OtaInterface *ota;
     TimeInterface *time;
-    ClientApiInterface *meteoInterface;
 
     // STATE MACHINE
     bool displayWifiAnimation;
@@ -47,9 +45,7 @@ class Domain {
     void setDisplayInterface(LaBoiteDisplayInterface* display);
     void setWebServerInterface(WebServerInterface* webServer);
     void setOtaInterface(OtaInterface* ota);
-    void setTimeInterface(TimeInterface *time);
-    void setMeteoInterface(ClientApiInterface *meteo);
-    
+    void setTimeInterface(TimeInterface *time);    
 };
 
 
