@@ -9,6 +9,7 @@ void Domain::setup() {
   webServer->setup(debug);
   display->setup(debug);
   time->setup();
+  websocket->setup(debug);
 
   displayWifiAnimation = false;
 
@@ -32,6 +33,7 @@ void Domain::loop() {
   network->loop();
   webServer->loop();
   display->loop();
+  websocket->loop();
   display->displayWifiStatus(!displayWifiAnimation);
 
   // Network disconnected
@@ -75,13 +77,35 @@ void Domain::loop() {
     ota->loop();
 
     time->loop();
-    display->displayHour(time->getHour(), time->getMinutes());
-    display->displayTemp(15);
+
     // start configuration webserver
     if (webServer->isStarted() == false) {
+      websocket->connect("192.168.15.240",8080,"/");
+      websocket->onEvent([&, this](WStype_t type, uint8_t *payload, size_t length) {
+        debug->debug("Domain::onWebSocketEvent handleWebSocketEvent");
+        return handleWebsocketEvent(payload, length);
+      });
       handleConfiguration();
     }
   } 
+}
+
+void Domain::handleWebsocketEvent(uint8_t *payload, size_t size) {
+  debug->debug("Domain::handleWebsocketEvent");
+
+  char message[size];
+  char index = '0';
+  for(int i = 0; i < size; i++) {
+    if (i == 0) {
+      index = (char) payload[i];
+    } else {
+      message[i-1] = (char) payload[i];
+    }
+  }
+  message[size-1] = 0;  
+  websocket->send((char *) String(index).c_str());
+  websocket->send(message);
+  display->displayTemplate(index-'0', message);
 }
 
 /**
@@ -189,4 +213,8 @@ void Domain::setOtaInterface (OtaInterface* oI) {
 
 void Domain::setTimeInterface (TimeInterface* tI) {
   time = tI;
+}
+
+void Domain::setWebsocketInterface (WebsocketClientInterface* wsO) {
+  websocket = wsO;
 }

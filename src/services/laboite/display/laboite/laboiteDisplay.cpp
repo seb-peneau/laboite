@@ -7,7 +7,7 @@ LaBoiteDisplay::LaBoiteDisplay() {
 
 void LaBoiteDisplay::setup (DebugInterface *debug) {
   display->begin(8);
-  display->setFont(myFont);
+  //display->setFont(myFont);
   display->displayReset();
 }
 
@@ -18,16 +18,9 @@ void LaBoiteDisplay::loop () {
 void LaBoiteDisplay::clearDisplay () {
   displayController->clear();
   //display->begin(8);
-  display->setZone(0, 0, 0);
-  display->setZone(1, 1, 3);
-  display->setZone(2, 4, 4);
-  display->setZone(3, 5, 7);
-  //display->setZone(2, 4, 4);
-  //display->setZone(3, 5, 7);  
-  display->setFont(myFont);
+  display->setZone(0, 0, 3);
+  display->setZone(3, 4, 7);
   display->displayReset();
-  display->displayZoneText(2, "\x0A8", PA_CENTER, 0, 0, PA_PRINT, PA_NO_EFFECT);
-  display->displayZoneText(3, "hello premier test de text assez long", PA_LEFT, 150, 150, PA_SCROLL_LEFT, PA_SCROLL_LEFT);
 }
 
 void LaBoiteDisplay::displayHour(int hour, int minutes) {
@@ -136,6 +129,15 @@ void LaBoiteDisplay::displayOtaProgress (int progressPercent) {
 
 // Not used
 
-void LaBoiteDisplay::displayIpAddress(String ip) {
-  // do nothing
+void LaBoiteDisplay::displayIpAddress(char *ip) {
+  this->clearDisplay();
+  //display->displayZoneText(1, ip, PA_LEFT, 150, 150, PA_SCROLL_LEFT, PA_SCROLL_LEFT);
+  display->displayZoneText(0, ip, PA_CENTER, 0, 0, PA_NO_EFFECT, PA_NO_EFFECT);
+}
+
+
+void LaBoiteDisplay::displayTemplate(int templateNumber, char *message) {
+  display->displayClear(templateNumber);
+  
+  display->displayZoneText(templateNumber, message, PA_CENTER, 0, 0, PA_NO_EFFECT, PA_NO_EFFECT);
 }

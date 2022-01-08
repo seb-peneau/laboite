@@ -55,7 +55,9 @@ class LaBoiteDisplay : public LaBoiteDisplayInterface
     void displayOtaProgress(int progressPercent);
 
     //Not used
-    void displayIpAddress(String text);
+    void displayIpAddress(char *text);
+    void displayTemplate(int templateNumber, char * message);
+
 };
 
 #endif

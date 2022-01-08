@@ -6,6 +6,7 @@
 #include "components/webserver/webserverinterface.h"
 #include "components/ota/otaInterface.h"
 #include "components/time/timeInterface.h"
+#include "components/websocket/websocketclientinterface.h"
 
 #define SSIDSTORAGE 10
 #define PASSSTORAGE 60
@@ -23,6 +24,7 @@ class Domain {
     BoardInterface *board;
     OtaInterface *ota;
     TimeInterface *time;
+    WebsocketClientInterface *websocket;
 
     // STATE MACHINE
     bool displayWifiAnimation;
@@ -33,6 +35,7 @@ class Domain {
     void handleConfigurationRequest ();
     void handleSoftReset ();
     void handleOtaProgress (unsigned int progress, unsigned int total);
+    void handleWebsocketEvent(uint8_t *payload, size_t size);
 
   public:
     void setup ();
@@ -45,7 +48,8 @@ class Domain {
     void setDisplayInterface(LaBoiteDisplayInterface* display);
     void setWebServerInterface(WebServerInterface* webServer);
     void setOtaInterface(OtaInterface* ota);
-    void setTimeInterface(TimeInterface *time);    
+    void setTimeInterface(TimeInterface *time);
+    void setWebsocketInterface(WebsocketClientInterface *websocket);
 };
 
 

@@ -15,7 +15,11 @@ class LaBoiteDisplayInterface : public DisplayInterface
     virtual void displayTemp (int temp);
     virtual void displayConfigurationMode(bool configModeEnabled);
     virtual void displayOtaProgress(int progressPercent);
-    virtual void displayIpAddress(String ip);
+    virtual void displayIpAddress(char *ip);
+
+    // templates
+    virtual void displayTemplate(int templateNumber, char * message);
+
 };
 
 #endif

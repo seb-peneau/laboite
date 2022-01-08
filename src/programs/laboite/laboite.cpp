@@ -12,6 +12,7 @@
 #include "./components/webserver/webserver/webserver.h"
 #include "./components/ota/espOta/espOta.h"
 #include "./components/time/ntp/ntp.h"
+#include "./components/websocket/websocketclient/websocketclient.h"
 
 Domain* Tamtam = new Domain();
 
@@ -27,6 +28,7 @@ void setup() {
   Tamtam->setWebServerInterface(new EspWebServer());
   Tamtam->setOtaInterface(new ESPOta());
   Tamtam->setTimeInterface(new Ntp());
+  Tamtam->setWebsocketInterface(new EspWebsocketClient());
   Tamtam->setup();
 }
 
